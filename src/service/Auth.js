@@ -27,7 +27,7 @@ export const getUser = () => {
 }
 
 export const getPreLogins = () => {
-    return JSON.parse(localStorage.getItem("pre_logins_sample_usr"));
+    return JSON.parse(localStorage.getItem("pre_logins_sample_usr")) || [];
 }
 
 export function isAuthenticated() {

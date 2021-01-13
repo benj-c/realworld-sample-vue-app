@@ -8,15 +8,19 @@
             <div class="user">
                 <div class="heading">
                     <span
-                        >Sample Management
+                        >Sample
                         <br />
-                        System
+                        Application
                     </span>
                 </div>
             </div>
 
             <ul class="main-nav-links">
-                <li v-for="(r, index) in navLinks" :key="index">
+                <li
+                    v-for="(r, index) in navLinks"
+                    :key="index"
+                    @click="onNavChange"
+                >
                     <router-link :to="r.path" v-if="r.meta.activeNav">
                         <i :class="`pi ${r.meta.icon}`"></i>
                         <span>{{ r.name }}</span>
@@ -32,7 +36,7 @@
             </ul>
         </div>
 
-        <div class="page-container" id="pg-container">
+        <div class="page-container" id="pg-container" style="height: 100vh">
             <div class="p-gird" style="height: 100%">
                 <div class="p-lg-12" v-if="authenticated === true">
                     <h1 class="header">
@@ -45,15 +49,17 @@
 
                 <div
                     class="p-lg-12"
-                    :style="
-                        `padding: 0; margin: 0; ${
-                            !title || title == 'Login' ? 'height: inherit' : ''
-                        }`
-                    "
+                    :style="`padding: 0; margin: 0; ${
+                        !title || title == 'Login' ? 'height: inherit' : ''
+                    }`"
                 >
-                    <transition name="fade" mode="out-in">
-                        <router-view></router-view>
-                    </transition>
+                    <router-view v-slot="{ Component }">
+                        <transition name="fade" mode="out-in">
+                            <keep-alive>
+                                <component :is="Component" />
+                            </keep-alive>
+                        </transition>
+                    </router-view>
                 </div>
             </div>
         </div>
@@ -62,27 +68,20 @@
 
 <style lang="less">
 @base-color: #6a75ca;
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .2s
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s;
 }
-.fade-enter, .fade-leave-to {
-    opacity: 0
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 .container {
     height: 100%;
     padding: 0;
     background-color: @base-color;
-    background: url("./assets/color-background-2.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow-x: hidden;
-
-
-    
-    // background-color: #a9c9ff;
-    // background-image: linear-gradient(180deg, #ffbbec 0%, #a9c9ff 100%);
-
+    overflow: hidden;
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
     .nav {
         color: #fff;
         z-index: 0;
@@ -90,6 +89,7 @@
         // left: 10px;
         top: 29%;
         width: 250px;
+        background: transparent;
 
         .main-nav-links,
         .nav-bottom {
@@ -126,11 +126,14 @@
             position: fixed;
             top: 2%;
             left: 10px;
+            background: transparent;
 
             .heading {
                 padding: 0 10px 10px 0;
                 text-shadow: 1px 1px 8px #fff;
-                font-size: 1em;
+                font-size: 1.5em;
+                background: transparent;
+                font-weight: 300;
             }
         }
 
@@ -148,14 +151,15 @@
     }
 
     .page-container {
-        background-color: #f7faff;
+        background-color: #fff;
         height: 100%;
         transition: 0.3s;
         transition-timing-function: ease;
+        background: #f2f2f2;
 
         .header {
             font-weight: 100;
-            margin: 0 0 0 10px;
+            margin: 0 0 0 5px;
             font-size: 1.5em;
             color: #333;
             transition: 0.2s ease-out;
@@ -181,8 +185,8 @@
         margin-left: 250px;
         margin-right: -250px;
         transform: scale(1, 0.97);
-        border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
     }
 
     .router-link-active {
@@ -203,7 +207,7 @@ export default {
         return {
             navActive: false,
             navLinks: routes,
-            title: null
+            title: null,
         };
     },
     mounted() {
@@ -213,12 +217,12 @@ export default {
         this.title = this.$route.meta.title;
     },
     computed: {
-        authenticated: function() {
+        authenticated: function () {
             return isAuthenticated();
         },
-        user: function() {
+        user: function () {
             return getUser();
-        }
+        },
     },
     methods: {
         resetNav() {
@@ -232,12 +236,15 @@ export default {
         },
         logoutUser() {
             logOut();
-        }
+        },
+        onNavChange() {
+            this.resetNav();
+        },
     },
     watch: {
-        "$route.path": function(p) {
-            this.title = this.navLinks.filter(i => i.path == p)[0].meta.title;
-        }
-    }
+        "$route.path": function (p) {
+            this.title = this.navLinks.filter((i) => i.path == p)[0].meta.title;
+        },
+    },
 };
 </script>

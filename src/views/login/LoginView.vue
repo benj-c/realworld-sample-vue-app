@@ -2,7 +2,7 @@
     <div class="login-page p-grid">
         <div class="p-col-12 header" style="margin: 0; margin-top: 3%">
             <h4>Welcome Back :)</h4>
-            <h2>Sample Management System</h2>
+            <h2>Sample Application</h2>
         </div>
         <div class="p-col-12 pre-logins" v-if="pre_logins.length > 0">
             <p>Select your account to continue</p>
@@ -42,26 +42,24 @@
             </div>
             <div class="login-header">
                 <h4>Welcome Back :)</h4>
-                <h1>Sample Management System</h1>
+                <h1>Sample Application</h1>
             </div>
             <form :model="loginData" ref="loginData" @submit="handleSubmit">
                 <div class="form-item">
-                    <label for="username">Username</label>
-                    <br />
                     <InputText
                         type="text"
                         id="username"
                         autofocus
                         v-model="loginData.username"
+                        placeholder="Name"
                     />
                 </div>
                 <div class="form-item">
-                    <label for="password">Password</label>
-                    <br />
                     <InputText
                         type="password"
                         id="password"
                         v-model="loginData.password"
+                        placeholder="Enter Password"
                     />
                 </div>
                 <div class="form-item">
@@ -85,7 +83,7 @@
             </div>
             <div class="login-header">
                 <h4>Welcome Back :)</h4>
-                <h1>Sample Management System</h1>
+                <h1>Sample Application</h1>
             </div>
             <form
                 :model="preLoginData"
@@ -99,12 +97,12 @@
                     <p>{{ preLoginData.username }}</p>
                 </div>
                 <div class="form-item">
-                    <label for="password">Password</label>
                     <br />
                     <InputText
                         type="password"
                         id="password"
                         v-model="preLoginData.password"
+                        placeholder="Enter Password"
                     />
                 </div>
                 <div class="form-item">
@@ -129,12 +127,7 @@
     padding: 0;
     margin: 0;
 
-    background: url("../../assets/color-background-2.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    // background-color: #a9c9ff;
-    // background-image: linear-gradient(180deg, #ffbbec 0%, #a9c9ff 100%);
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
 
     .header {
         text-align: center;
@@ -162,28 +155,28 @@
             padding: 0;
             display: flex;
             justify-content: center;
+            text-align: center;
 
             li {
                 text-align: center;
                 list-style: none;
-                // display: inline-flex;
 
-                margin: 10px 20px;
+                margin: 10px 8px;
                 padding: 10px;
                 cursor: pointer;
-                background: rgba(0, 0, 0, 0.05);
+                // background: rgba(0, 0, 0, 0.05);
                 border-radius: 5px;
                 transition: 0.3s ease-in;
-                width: 80px;
+                width: 120px;
 
                 &:hover {
-                    background: rgba(0, 0, 0, 0.2);
+                    background: rgba(0, 0, 0, 0.1);
                 }
 
                 h2 {
                     font-weight: 200;
                     text-transform: uppercase;
-                    margin: 5px;
+                    margin: 5px auto;
                     border-radius: 100%;
                     background: #e95434;
                     color: #fff;
@@ -213,6 +206,7 @@
         right: 0;
         text-align: center;
         color: #888;
+        background: transparent;
 
         .new-account {
             padding: 10px;
@@ -248,7 +242,7 @@
         margin: 0 auto;
         transition: all ease-in 0.3s;
         background: rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
+        // border-radius: 10px;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
 
@@ -258,6 +252,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            background: transparent;
 
             .pi-times {
                 cursor: pointer;
@@ -268,12 +263,13 @@
 
         .login-header {
             text-align: center;
+            background: transparent;
             h1,
             h4 {
                 font-weight: 200;
                 margin: 2% 0 0 0;
                 color: #fff;
-                text-shadow: 0px 0px 10px #e95434;
+                text-shadow: 0px 0px 10px @baseColor;
                 padding: 0 10px;
             }
             p {
@@ -288,9 +284,11 @@
             top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
+            // background: transparent;
 
             .form-item {
                 margin-bottom: 20px;
+                background: transparent;
 
                 label {
                     text-align: left;
@@ -307,7 +305,7 @@
                     background: rgba(255, 255, 255, 0.5);
                     color: #495057;
                     padding: 0.5rem 0.5rem;
-                    border: 1px solid #ffac99;
+                    border: 1px solid transparent;
                     transition: background-color 0.2s, color 0.2s,
                         border-color 0.2s, box-shadow 0.2s;
                     border-radius: 3px;
@@ -333,6 +331,7 @@
 
             .pre-user {
                 text-align: center;
+                background: transparent;
                 h2 {
                     font-weight: 200;
                     text-transform: uppercase;
@@ -373,17 +372,17 @@ export default {
             show_pre_login_popup: false,
             submitting: false,
             loginData: { username: null, password: null },
-            preLoginData: { username: null, password: null }
+            preLoginData: { username: null, password: null },
         };
     },
     mounted() {
-        this.pre_logins = getPreLogins().map(v => {
+        this.pre_logins = getPreLogins().map((v) => {
             return { l: v, c: this.getThumnailColor() };
         });
         this.show_login_popup = this.pre_logins.length == 0;
     },
     methods: {
-        getThumnailColor: function() {
+        getThumnailColor: function () {
             let c = ["#5c3882", "#e95434", "#139eb8"];
             let r = (Math.random() * (c.length + 1)) << 0;
             return c[r];
@@ -394,38 +393,38 @@ export default {
                 this.login(this.loginData);
             }
         },
-        handleSubmitPreUser: function(e) {
+        handleSubmitPreUser: function (e) {
             e.preventDefault();
             if (this.preLoginData.username && this.preLoginData.password) {
                 this.login(this.preLoginData);
             }
         },
-        login: function(d) {
+        login: function (d) {
             this.submitting = true;
             UserApi.login(d)
-                .then(res => {
+                .then((res) => {
                     let d = {
                         id: res.data.id,
                         username: res.data.username,
                         email: res.data.email,
                         active: true,
                         roles: res.data.role,
-                        token: res.data.token
+                        token: res.data.token,
                     };
                     put(d);
                     window.location.reload();
                 })
-                .catch(e => {
-                    e;
+                .catch((e) => {
+                    console.log(e);
                     this.submitting = false;
                 })
                 .finally(() => {});
         },
-        setPreLogin: function(d) {
+        setPreLogin: function (d) {
             this.show_pre_login_popup = !this.show_pre_login_popup;
             this.preLoginData.username = d.l;
             this.preLoginData.c = d.c;
-        }
-    }
+        },
+    },
 };
 </script>
