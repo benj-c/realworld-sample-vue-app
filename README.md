@@ -28,10 +28,8 @@ yarn build
 
 
 ### Screenshots > mobile
-![Screenshot](docs/images/mob-login.png)
 
-![Screenshot](docs/images/mob-add-account-on-login.png)
-
-![Screenshot](docs/images/mob-login-with-previously-loggedin-user.png)
-
-![Screenshot](docs/images/mob-dashboard-test-sample.png)
+<img src="docs/images/mob-login.png" width="250" height="444">
+<img src="docs/images/mob-add-account-on-login.png" width="250" height="444">
+<img src="docs/images/mob-login-with-previously-loggedin-user.png" width="250" height="444">
+<img src="docs/images/mob-dashboard-test-sample.png" width="250" height="444">
